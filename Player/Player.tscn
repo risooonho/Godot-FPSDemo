@@ -1,0 +1,103 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Player/FPSController.gd" type="Script" id=1]
+[ext_resource path="res://Player/Head.gd" type="Script" id=2]
+
+[sub_resource type="CapsuleShape" id=1]
+
+radius = 0.6
+height = 2.0
+
+[node name="Player" type="KinematicBody" index="0"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.3 )
+input_ray_pickable = true
+input_capture_on_drag = false
+collision_layer = 1
+collision_mask = 1
+axis_lock_linear_x = false
+axis_lock_linear_y = false
+axis_lock_linear_z = false
+axis_lock_angular_x = false
+axis_lock_angular_y = false
+axis_lock_angular_z = false
+collision/safe_margin = 0.001
+script = ExtResource( 1 )
+mouse_sensitivity = 0.3
+max_camera_angle = 90
+min_camera_angle = -90
+fly_speed = 20
+fly_accel = 4
+is_flying = false
+gravity = -9.8
+walk_speed = 20
+sprint_speed = 40
+crouch_speed = 10
+crawl_speed = 5
+acceleration = 2
+deacceleration = 6
+player_stance = 0
+max_slope_angle = 35
+max_stair_angle = 20
+stair_jump_height = 6
+jump_height = 7
+max_time_in_air = 30
+
+[node name="CollisionShape" type="CollisionShape" parent="." index="0"]
+
+transform = Transform( 1, 0, 0, 0, -4.37114e-008, -1, 0, 1, -4.37114e-008, 0, 0, 0 )
+shape = SubResource( 1 )
+disabled = false
+_sections_unfolded = [ "Transform" ]
+
+[node name="Head" type="Spatial" parent="." index="1"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
+script = ExtResource( 2 )
+_sections_unfolded = [ "Transform" ]
+crouch_position = Vector3( 0, 0.5, 0 )
+crawl_position = Vector3( 0, -0.5, 0 )
+
+[node name="Camera" type="Camera" parent="Head" index="0"]
+
+keep_aspect = 1
+cull_mask = 1048575
+environment = null
+h_offset = 0.0
+v_offset = 0.0
+doppler_tracking = 0
+projection = 0
+current = false
+fov = 70.0
+size = 1.0
+near = 0.05
+far = 100.0
+_sections_unfolded = [ "Transform" ]
+
+[node name="SlopeRaycast" type="RayCast" parent="." index="2"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.9, 0 )
+enabled = false
+exclude_parent = true
+cast_to = Vector3( 0, -1, 0 )
+collision_mask = 1
+
+[node name="StairRaycast" type="RayCast" parent="." index="3"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0.6 )
+enabled = false
+exclude_parent = true
+cast_to = Vector3( 0, -0.5, 0 )
+collision_mask = 1
+
+[connection signal="start_crawling" from="." to="Head" method="_on_Player_start_crawling"]
+
+[connection signal="start_crouching" from="." to="Head" method="_on_Player_start_crouching"]
+
+[connection signal="start_flying" from="." to="Head" method="_on_Player_start_flying"]
+
+[connection signal="start_standing" from="." to="Head" method="_on_Player_start_standing"]
+
+[connection signal="start_walking" from="." to="Head" method="_on_Player_start_walking"]
+
+
