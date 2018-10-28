@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Futuristic Assault Rifle Single Shot 02.wav-04adf42b9e5b3bc57510cdb30856853a.sample"
+
+[deps]
+
+source_file="res://Audio/Weapons/Futuristic Assault Rifle Single Shot 02.wav"
+dest_files=[ "res://.import/Futuristic Assault Rifle Single Shot 02.wav-04adf42b9e5b3bc57510cdb30856853a.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

@@ -1,16 +1,27 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Player/FPSController.gd" type="Script" id=1]
 [ext_resource path="res://Player/Head.gd" type="Script" id=2]
+[ext_resource path="res://Models/Weapons/EmptyHand.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Textures/Crosshairs/simple-01-whole.png" type="Texture" id=4]
 
 [sub_resource type="CapsuleShape" id=1]
 
 radius = 0.6
 height = 2.0
 
+[sub_resource type="CapsuleMesh" id=2]
+
+custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
+radius = 0.6
+mid_height = 2.0
+radial_segments = 64
+rings = 8
+_sections_unfolded = [ "Resource" ]
+
 [node name="Player" type="KinematicBody" index="0"]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.3 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0.3 )
 input_ray_pickable = true
 input_capture_on_drag = false
 collision_layer = 1
@@ -37,7 +48,7 @@ crawl_speed = 5
 acceleration = 2
 deacceleration = 6
 player_stance = 0
-max_slope_angle = 35
+max_slope_angle = 60
 max_stair_angle = 20
 stair_jump_height = 6
 jump_height = 7
@@ -50,6 +61,21 @@ shape = SubResource( 1 )
 disabled = false
 _sections_unfolded = [ "Transform" ]
 
+[node name="MeshInstance" type="MeshInstance" parent="CollisionShape" index="0"]
+
+layers = 524288
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = SubResource( 2 )
+skeleton = NodePath("..")
+material/0 = null
+
 [node name="Head" type="Spatial" parent="." index="1"]
 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
@@ -60,23 +86,40 @@ crawl_position = Vector3( 0, -0.5, 0 )
 
 [node name="Camera" type="Camera" parent="Head" index="0"]
 
+transform = Transform( 1.52, 0, 0, 0, 1.04, 0, 0, 0, 0.8, 0, 0, -0.4 )
 keep_aspect = 1
-cull_mask = 1048575
+cull_mask = 524287
 environment = null
 h_offset = 0.0
 v_offset = 0.0
 doppler_tracking = 0
 projection = 0
 current = false
-fov = 70.0
+fov = 90.0
 size = 1.0
 near = 0.05
 far = 100.0
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="WeaponPosition" type="Position3D" parent="Head/Camera" index="0"]
+
+transform = Transform( -4.37114e-008, 0, 0.526316, 0, 0.999999, 0, -1.9, 0, -4.37115e-008, 0.328947, -0.48077, -1 )
+
+[node name="EmptyHand" parent="Head/Camera/WeaponPosition" index="0" instance=ExtResource( 3 )]
+
+visible = false
+
+[node name="ActionRaycast" type="RayCast" parent="Head/Camera" index="1"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.25 )
+enabled = true
+exclude_parent = true
+cast_to = Vector3( 0, 0, -2 )
+collision_mask = 262147
 
 [node name="SlopeRaycast" type="RayCast" parent="." index="2"]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.9, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.9, 0.6 )
 enabled = false
 exclude_parent = true
 cast_to = Vector3( 0, -1, 0 )
@@ -84,17 +127,36 @@ collision_mask = 1
 
 [node name="StairRaycast" type="RayCast" parent="." index="3"]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0.6 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.9, 0.5 )
 enabled = false
 exclude_parent = true
 cast_to = Vector3( 0, -0.5, 0 )
 collision_mask = 1
 
+[node name="TextureRect" type="TextureRect" parent="." index="4"]
+
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -39.0
+margin_top = -353.0
+margin_right = 217.0
+margin_bottom = -97.0
+rect_scale = Vector2( 0.2, 0.2 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 4 )
+stretch_mode = 0
+_sections_unfolded = [ "Rect" ]
+
 [connection signal="start_crawling" from="." to="Head" method="_on_Player_start_crawling"]
 
 [connection signal="start_crouching" from="." to="Head" method="_on_Player_start_crouching"]
-
-[connection signal="start_flying" from="." to="Head" method="_on_Player_start_flying"]
 
 [connection signal="start_standing" from="." to="Head" method="_on_Player_start_standing"]
 

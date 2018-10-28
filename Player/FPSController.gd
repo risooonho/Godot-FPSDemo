@@ -49,7 +49,7 @@ enum PLAYER_STANCES { STANDING, CROUCHING, CRAWLING, FLYING }
 export var player_stance = PLAYER_STANCES.STANDING
 
 # Slopes variables. Used to manage behavior when walking on a slope.
-export (int) var max_slope_angle = 35
+export (int) var max_slope_angle = 60
 
 # Stairs variables. Used to manage behavior when walking on stairs.
 export (int) var max_stair_angle = 20
@@ -61,6 +61,11 @@ export (int) var max_time_in_air = 30
 var time_in_air = 0;
 var has_contact_with_floor = false
 
+# weapon controller
+const WEAPON_BIT_MASK = 18
+var weapons = [0, 1, 2, 3, 4]
+var current_weapon = 0
+
 # Signals
 signal start_walking
 signal start_sprinting
@@ -71,8 +76,6 @@ signal start_standing
 
 ### Godot built-in methods
 func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
 	pass
 
 func _physics_process(delta):
@@ -86,6 +89,34 @@ func _input(event):
 		# of the camera movement that is done in the _physics_process method are synchronised as much
 		# as possible
 		camera_change = event.relative
+	
+	if Input.is_action_just_pressed("action_activate"):
+		if $Head/Camera/ActionRaycast.is_colliding() and $Head/Camera/ActionRaycast.get_collision_mask_bit(WEAPON_BIT_MASK):
+			var temp_weapon = $Head/Camera/ActionRaycast.get_collider().get_parent().get_parent()
+			temp_weapon.get_parent().remove_child(temp_weapon)
+			temp_weapon.translation = Vector3()
+			$Head/Camera/WeaponPosition.add_child(temp_weapon)
+			weapons.append(temp_weapon.get_index())
+			current_weapon = weapons.size() - 1
+	
+	if Input.is_action_pressed("weapon_fire"):
+		$Head/Camera/WeaponPosaaaition.get_child(weapons[current_weapon]).fire()
+	if Input.is_action_just_pressed("weapon_previous"):
+		if $Head/Camera/WeaponPosition.get_child(weapons[current_weapon]) != null:
+			$Head/Camera/WeaponPosition.get_child(weapons[current_weapon]).hide()
+		current_weapon -= 1
+		if current_weapon < 0:
+			current_weapon = 0
+		if $Head/Camera/WeaponPosition.get_child(weapons[current_weapon]) != null:
+			$Head/Camera/WeaponPosition.get_child(weapons[current_weapon]).show()
+	if Input.is_action_just_pressed("weapon_next"):
+		if $Head/Camera/WeaponPosition.get_child(weapons[current_weapon]) != null:
+			$Head/Camera/WeaponPosition.get_child(weapons[current_weapon]).hide()
+		current_weapon += 1
+		if current_weapon >= weapons.size():
+			current_weapon -= 1
+		if $Head/Camera/WeaponPosition.get_child(weapons[current_weapon]) != null:
+			$Head/Camera/WeaponPosition.get_child(weapons[current_weapon]).show()
 
 ### Custom methods
 func move(delta):
@@ -206,13 +237,15 @@ func process_walk_movements(delta):
 	velocity.x = current_velocity.x
 	velocity.z = current_velocity.z
 	
+	velocity.y += gravity * delta
+	
 	# We then check if the player wants to jump
 	if has_contact_with_floor and Input.is_action_just_pressed("jump"):
 		velocity.y = jump_height
 		has_contact_with_floor = false
 	
 	# We can now move the player
-	velocity = move_and_slide(velocity, Vector3(0, 1, 0))
+	velocity = move_and_slide(velocity, Vector3(0, 1, 0), 0.05, 4, deg2rad(max_slope_angle))
 	
 	if not has_contact_with_floor:
 		time_in_air += 1

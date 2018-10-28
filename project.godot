@@ -10,8 +10,8 @@ config_version=3
 
 [application]
 
-config/name="TemplateFPS"
-run/main_scene="res://Scenes/TestScenes/TestingGround.tscn"
+config/name="Godot-FPSDemo"
+run/main_scene="res://Scenes/TestScenes/Testing Ground.tscn"
 config/icon="res://icon.png"
 
 [input]
@@ -45,6 +45,8 @@ scene_reload=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_na
 crouch=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777238,"unicode":0,"echo":false,"script":null)
  ]
 crawl=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":88,"unicode":0,"echo":false,"script":null)
+ ]
+weapon_fire=[ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
  ]
 
 [rendering]

@@ -1,0 +1,17 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/ump47.obj-3c63be6c27ea7d24de8ecbb172069dfe.mesh"
+
+[deps]
+
+files=[ "res://.import/ump47.obj-3c63be6c27ea7d24de8ecbb172069dfe.mesh" ]
+
+source_file="res://Models/Weapons/ump47.obj"
+dest_files=[ "res://.import/ump47.obj-3c63be6c27ea7d24de8ecbb172069dfe.mesh", "res://.import/ump47.obj-3c63be6c27ea7d24de8ecbb172069dfe.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )

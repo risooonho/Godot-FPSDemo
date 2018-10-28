@@ -1,0 +1,63 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Models/Weapons/AR 2.dae" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/Weapon.gd" type="Script" id=2]
+[ext_resource path="res://Audio/Weapons/rifle.wav" type="AudioStream" id=3]
+
+[node name="AR2" instance=ExtResource( 1 )]
+
+script = ExtResource( 2 )
+fire_rate = 1
+
+[node name="AR_2" parent="." index="0"]
+
+editor/display_folded = true
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 0, 0, 0 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Cañon" parent="AR_2" index="0"]
+
+layers = 262144
+
+[node name="Gatillo" parent="AR_2" index="1"]
+
+layers = 262144
+
+[node name="Cuerpo" parent="AR_2" index="2"]
+
+_sections_unfolded = [ "Transform" ]
+
+[node name="Cuerpo" parent="AR_2/Cuerpo" index="0"]
+
+layers = 262144
+
+[node name="Cubo.1" parent="AR_2/Cuerpo" index="1"]
+
+layers = 262144
+
+[node name="Cubo.2" parent="AR_2/Cuerpo" index="2"]
+
+layers = 262144
+
+[node name="Mira" parent="AR_2" index="3"]
+
+layers = 262144
+
+[node name="Cubo.5" parent="AR_2" index="4"]
+
+layers = 262144
+
+[node name="Cargador" parent="AR_2" index="5"]
+
+layers = 262144
+
+[node name="FireSound" type="AudioStreamPlayer" parent="." index="2"]
+
+stream = ExtResource( 3 )
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+mix_target = 0
+bus = "Master"
+
+
