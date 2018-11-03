@@ -19,7 +19,7 @@ radial_segments = 64
 rings = 8
 _sections_unfolded = [ "Resource" ]
 
-[node name="Player" type="KinematicBody" index="0"]
+[node name="Player" type="KinematicBody"]
 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0.3 )
 input_ray_pickable = true
@@ -41,14 +41,15 @@ fly_speed = 20
 fly_accel = 4
 is_flying = false
 gravity = -9.8
+gravity_fall_coef = 0
 walk_speed = 20
-sprint_speed = 40
+sprint_speed_coef = 5
 crouch_speed = 10
 crawl_speed = 5
 acceleration = 2
 deacceleration = 6
 player_stance = 0
-max_slope_angle = 60
+max_slope_angle = 85
 max_stair_angle = 20
 stair_jump_height = 6
 jump_height = 7
@@ -98,7 +99,7 @@ current = false
 fov = 90.0
 size = 1.0
 near = 0.05
-far = 100.0
+far = 500.0
 _sections_unfolded = [ "Transform", "Visibility" ]
 
 [node name="WeaponPosition" type="Position3D" parent="Head/Camera" index="0"]
@@ -119,19 +120,21 @@ collision_mask = 262147
 
 [node name="SlopeRaycast" type="RayCast" parent="." index="2"]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.9, 0.6 )
-enabled = false
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
+enabled = true
 exclude_parent = true
 cast_to = Vector3( 0, -1, 0 )
 collision_mask = 1
+_sections_unfolded = [ "Transform" ]
 
 [node name="StairRaycast" type="RayCast" parent="." index="3"]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.9, 0.5 )
-enabled = false
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.7, 0.6 )
+enabled = true
 exclude_parent = true
-cast_to = Vector3( 0, -0.5, 0 )
+cast_to = Vector3( 0, -1, 0 )
 collision_mask = 1
+_sections_unfolded = [ "Transform" ]
 
 [node name="TextureRect" type="TextureRect" parent="." index="4"]
 

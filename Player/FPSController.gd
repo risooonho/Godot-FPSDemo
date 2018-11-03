@@ -35,10 +35,14 @@ export (int) var fly_speed = 20
 export (int) var fly_accel = 4
 export (bool) var is_flying = false
 
-# Walking variables.
+# Gravity variables
 export (float) var gravity = -9.8
+# Has to be negative as it is added to the gravity
+export (int) var gravity_fall_coef = -0
+
+# Walking variables.
 export (int) var walk_speed = 20
-export (int) var sprint_speed = 40
+export (int) var sprint_speed_coef = 5
 export (int) var crouch_speed = 10
 export (int) var crawl_speed = 5
 export (int) var acceleration = 2
@@ -49,7 +53,7 @@ enum PLAYER_STANCES { STANDING, CROUCHING, CRAWLING, FLYING }
 export var player_stance = PLAYER_STANCES.STANDING
 
 # Slopes variables. Used to manage behavior when walking on a slope.
-export (int) var max_slope_angle = 60
+export (int) var max_slope_angle = 85
 
 # Stairs variables. Used to manage behavior when walking on stairs.
 export (int) var max_stair_angle = 20
@@ -60,11 +64,6 @@ export (int) var jump_height = 7
 export (int) var max_time_in_air = 30
 var time_in_air = 0;
 var has_contact_with_floor = false
-
-# weapon controller
-const WEAPON_BIT_MASK = 18
-var weapons = [0, 1, 2, 3, 4]
-var current_weapon = 0
 
 # Signals
 signal start_walking
@@ -89,34 +88,6 @@ func _input(event):
 		# of the camera movement that is done in the _physics_process method are synchronised as much
 		# as possible
 		camera_change = event.relative
-	
-	if Input.is_action_just_pressed("action_activate"):
-		if $Head/Camera/ActionRaycast.is_colliding() and $Head/Camera/ActionRaycast.get_collision_mask_bit(WEAPON_BIT_MASK):
-			var temp_weapon = $Head/Camera/ActionRaycast.get_collider().get_parent().get_parent()
-			temp_weapon.get_parent().remove_child(temp_weapon)
-			temp_weapon.translation = Vector3()
-			$Head/Camera/WeaponPosition.add_child(temp_weapon)
-			weapons.append(temp_weapon.get_index())
-			current_weapon = weapons.size() - 1
-	
-	if Input.is_action_pressed("weapon_fire"):
-		$Head/Camera/WeaponPosaaaition.get_child(weapons[current_weapon]).fire()
-	if Input.is_action_just_pressed("weapon_previous"):
-		if $Head/Camera/WeaponPosition.get_child(weapons[current_weapon]) != null:
-			$Head/Camera/WeaponPosition.get_child(weapons[current_weapon]).hide()
-		current_weapon -= 1
-		if current_weapon < 0:
-			current_weapon = 0
-		if $Head/Camera/WeaponPosition.get_child(weapons[current_weapon]) != null:
-			$Head/Camera/WeaponPosition.get_child(weapons[current_weapon]).show()
-	if Input.is_action_just_pressed("weapon_next"):
-		if $Head/Camera/WeaponPosition.get_child(weapons[current_weapon]) != null:
-			$Head/Camera/WeaponPosition.get_child(weapons[current_weapon]).hide()
-		current_weapon += 1
-		if current_weapon >= weapons.size():
-			current_weapon -= 1
-		if $Head/Camera/WeaponPosition.get_child(weapons[current_weapon]) != null:
-			$Head/Camera/WeaponPosition.get_child(weapons[current_weapon]).show()
 
 ### Custom methods
 func move(delta):
@@ -127,7 +98,7 @@ func move(delta):
 	
 	if player_stance != PLAYER_STANCES.FLYING:
 		process_slopes_detection(delta)
-		process_stair_detection()
+		#process_stair_detection()
 		process_walk_movements(delta)
 	else:
 		process_fly_movement(delta)
@@ -158,6 +129,8 @@ func process_movement_inputs():
 	if Input.is_action_pressed("move_backward"):
 		direction += camera_rotation.z
 	
+	# Allows to change the player stance and notify when
+	# it happens
 	if Input.is_action_just_pressed("crouch"):
 		if player_stance == PLAYER_STANCES.CROUCHING:
 			player_stance = PLAYER_STANCES.STANDING
@@ -194,13 +167,13 @@ func process_slopes_detection(delta):
 		var floor_angle = rad2deg(acos(slope_raycast_normal.dot(Vector3(0,1,0))))
 		
 		if floor_angle > max_slope_angle:
-			velocity.y += gravity * delta
+			velocity.y += (gravity + gravity_fall_coef) * delta
 	else:
-		if not $SlopeRaycast.is_colliding():
+		if !$SlopeRaycast.is_colliding():
 			has_contact_with_floor = false
-		velocity.y += gravity * delta
+		velocity.y += (gravity + gravity_fall_coef) * delta
 		
-	if has_contact_with_floor and not is_on_floor():
+	if has_contact_with_floor and !is_on_floor():
 		move_and_collide(Vector3(0, -1, 0))
 
 func process_stair_detection():
@@ -222,7 +195,7 @@ func process_walk_movements(delta):
 	speed = get_speed_from_stance()
 	
 	if Input.is_action_pressed("sprint"):
-		speed += sprint_speed
+		speed += sprint_speed_coef
 		emit_signal("start_sprinting")
 	
 	var target = direction * speed
@@ -232,12 +205,13 @@ func process_walk_movements(delta):
 		accel = acceleration
 	else:
 		accel = deacceleration
+	
 	current_velocity = current_velocity.linear_interpolate(target, accel * delta)
 	
 	velocity.x = current_velocity.x
 	velocity.z = current_velocity.z
 	
-	velocity.y += gravity * delta
+	#velocity.y += gravity * delta
 	
 	# We then check if the player wants to jump
 	if has_contact_with_floor and Input.is_action_just_pressed("jump"):
@@ -245,9 +219,9 @@ func process_walk_movements(delta):
 		has_contact_with_floor = false
 	
 	# We can now move the player
-	velocity = move_and_slide(velocity, Vector3(0, 1, 0), 0.05, 4, deg2rad(max_slope_angle))
+	velocity = move_and_slide(velocity, Vector3(0, 1, 0))
 	
-	if not has_contact_with_floor:
+	if !has_contact_with_floor:
 		time_in_air += 1
 	
 	$StairRaycast.translation.x = direction.x

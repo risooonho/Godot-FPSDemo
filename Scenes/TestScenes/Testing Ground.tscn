@@ -1,78 +1,29 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scenes/TestScenes/Testing.gd" type="Script" id=1]
-[ext_resource path="res://Models/TestModels/FloorSmall.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Models/TestModels/WallMedium.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Models/TestModels/FloorMedium.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Models/TestModels/FloorBig.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Models/TestModels/WallSmall.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Models/TestModels/CubeSmall.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Models/TestModels/CubeMedium.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Models/TestModels/RampLow.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Models/TestModels/RampHigh.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Models/TestModels/RampMedium.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=12]
-[ext_resource path="res://Models/Weapons/UMP45.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Models/TestModels/FloorBig.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Models/TestModels/WallBig.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Models/TestModels/RampHigh.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Models/TestModels/RampMedium.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Models/TestModels/CubeMedium.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Models/TestModels/CubeBig.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Models/TestModels/CubeSmall.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=9]
 
-[node name="Testing Ground" type="Node"]
+[node name="Testing Ground" type="Node" index="0"]
 
 script = ExtResource( 1 )
 
-[node name="Entrance Hall" type="Node" parent="." index="0"]
+[node name="Environment" type="Node" parent="." index="0"]
 
-editor/display_folded = true
+[node name="FloorBig" parent="Environment" index="0" instance=ExtResource( 2 )]
 
-[node name="FloorSmall" parent="Entrance Hall" index="0" instance=ExtResource( 2 )]
+transform = Transform( 5, 0, 0, 0, 1, 0, 0, 0, 5, 0, 0, 0 )
+_sections_unfolded = [ "Transform" ]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -47.7, 0, 0 )
+[node name="DirectionalLight" type="DirectionalLight" parent="Environment" index="1"]
 
-[node name="FloorSmall2" parent="Entrance Hall" index="1" instance=ExtResource( 2 )]
-
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -47.7, 0, 5 )
-
-[node name="FloorSmall3" parent="Entrance Hall" index="2" instance=ExtResource( 2 )]
-
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -47.7, 0, -5 )
-
-[node name="FloorSmall4" parent="Entrance Hall" index="3" instance=ExtResource( 2 )]
-
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -42.7, 0, -5 )
-
-[node name="FloorSmall5" parent="Entrance Hall" index="4" instance=ExtResource( 2 )]
-
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -42.7, 0, 0 )
-
-[node name="FloorSmall6" parent="Entrance Hall" index="5" instance=ExtResource( 2 )]
-
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -42.7, 0, 5 )
-
-[node name="WallMedium" parent="Entrance Hall" index="6" instance=ExtResource( 3 )]
-
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -45.2, 5.1, 7.4 )
-
-[node name="WallMedium2" parent="Entrance Hall" index="7" instance=ExtResource( 3 )]
-
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -45.2, 5.1, -7.4 )
-
-[node name="WallMedium3" parent="Entrance Hall" index="8" instance=ExtResource( 3 )]
-
-transform = Transform( 6.70552e-008, 0, -1, 0, 1, 0, 1.46475, 0, 9.82191e-008, -50.1, 5.1, -1.63913e-006 )
-
-[node name="WallMedium4" parent="Entrance Hall" index="9" instance=ExtResource( 3 )]
-
-transform = Transform( -2.93108e-015, 1, 4.37114e-008, -6.70552e-008, -4.37114e-008, 1, 1.46475, 0, 9.82191e-008, -45.2, 10, -1.63913e-006 )
-
-[node name="WallMedium5" parent="Entrance Hall" index="10" instance=ExtResource( 3 )]
-
-transform = Transform( -4.37114e-008, 0, -1, 0, 1, 0, 0.439969, 0, -1.92316e-008, -40.4, 5.1, -5.1 )
-
-[node name="WallMedium6" parent="Entrance Hall" index="11" instance=ExtResource( 3 )]
-
-transform = Transform( -4.37114e-008, 0, -1, 0, 1, 0, 0.439969, 0, -1.92316e-008, -40.4, 5.1, 5.1 )
-
-[node name="DirectionalLight" type="DirectionalLight" parent="Entrance Hall" index="12"]
-
-transform = Transform( -0.921381, -0.368553, -0.123392, -0.351636, 0.655247, 0.668583, -0.165556, 0.659409, -0.733329, 1.9, 15.9, 0 )
+transform = Transform( 1, 0, 0, 0, 0.66262, 0.748956, 0, -0.748956, 0.66262, 0, 28, 0 )
 layers = 1
 light_color = Color( 1, 1, 1, 1 )
 light_energy = 1.0
@@ -96,111 +47,217 @@ directional_shadow_normal_bias = 0.8
 directional_shadow_bias_split_scale = 0.25
 directional_shadow_depth_range = 0
 directional_shadow_max_distance = 200.0
-_sections_unfolded = [ "Shadow" ]
+_sections_unfolded = [ "Light", "Shadow" ]
 
-[node name="Corridor" type="Node" parent="." index="1"]
+[node name="WallBig" parent="Environment" index="2" instance=ExtResource( 3 )]
+
+transform = Transform( 5, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, 50 )
+
+[node name="WallBig2" parent="Environment" index="3" instance=ExtResource( 3 )]
+
+transform = Transform( 5, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, -50 )
+
+[node name="WallBig3" parent="Environment" index="4" instance=ExtResource( 3 )]
+
+transform = Transform( -2.18557e-007, 0, 1, 0, 1, 0, -5, 0, -4.37114e-008, 50, 9, 0 )
+
+[node name="WallBig4" parent="Environment" index="5" instance=ExtResource( 3 )]
+
+transform = Transform( -2.18557e-007, 0, 1, 0, 1, 0, -5, 0, -4.37114e-008, -50, 9, 0 )
+
+[node name="RampHigh" parent="Environment" index="6" instance=ExtResource( 4 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 2.5, 0 )
+
+[node name="RampMedium" parent="Environment" index="7" instance=ExtResource( 5 )]
+
+transform = Transform( -0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, -0.965926, 30, 1.5, 0 )
+
+[node name="CubeMedium" parent="Environment" index="8" instance=ExtResource( 6 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 2, 20 )
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="CubeBig" parent="Environment" index="9" instance=ExtResource( 7 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 2.5, -31.5 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Stairs" type="Spatial" parent="Environment" index="10"]
 
 editor/display_folded = true
 
-[node name="FloorMedium" parent="Corridor" index="0" instance=ExtResource( 4 )]
+[node name="CubeSmall" parent="Environment/Stairs" index="0" instance=ExtResource( 8 )]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.55, -35.2, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.7, 2.23517e-008, -22.3 )
 
-[node name="FloorMedium2" parent="Corridor" index="1" instance=ExtResource( 4 )]
+[node name="CubeSmall5" parent="Environment/Stairs" index="1" instance=ExtResource( 8 )]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.55, -25.2, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 18.7, 2.23517e-008, -22.3 )
 
-[node name="FloorMedium3" parent="Corridor" index="2" instance=ExtResource( 4 )]
+[node name="CubeSmall10" parent="Environment/Stairs" index="2" instance=ExtResource( 8 )]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.55, -15.2, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.7, 2.23517e-008, -22.3 )
 
-[node name="WallMedium" parent="Corridor" index="3" instance=ExtResource( 3 )]
+[node name="CubeSmall13" parent="Environment/Stairs" index="3" instance=ExtResource( 8 )]
 
-transform = Transform( 3.02292, 0, 0, 0, 1, 0, 0, 0, 1, -25.4, 5.1, -2.8 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.7, 2.23517e-008, -22.3 )
 
-[node name="WallMedium2" parent="Corridor" index="4" instance=ExtResource( 3 )]
+[node name="CubeSmall18" parent="Environment/Stairs" index="4" instance=ExtResource( 8 )]
 
-transform = Transform( 3.02292, 0, 0, 0, 1, 0, 0, 0, 1, -25.4, 5.1, 2.8 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.7, 2.23517e-008, -22.3 )
 
-[node name="WallMedium3" parent="Corridor" index="5" instance=ExtResource( 3 )]
+[node name="CubeSmall2" parent="Environment/Stairs" index="5" instance=ExtResource( 8 )]
 
-transform = Transform( 3.02292, 0, 0, 0, -4.37114e-008, 1, 0, -0.55, -2.40413e-008, -25.4, 10, -1.19209e-007 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.7, 0.3, -23.3 )
 
-[node name="Main Area" type="Node" parent="." index="2"]
+[node name="CubeSmall7" parent="Environment/Stairs" index="6" instance=ExtResource( 8 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 18.7, 0.3, -23.3 )
+
+[node name="CubeSmall12" parent="Environment/Stairs" index="7" instance=ExtResource( 8 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.7, 0.3, -23.3 )
+
+[node name="CubeSmall16" parent="Environment/Stairs" index="8" instance=ExtResource( 8 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.7, 0.3, -23.3 )
+
+[node name="CubeSmall17" parent="Environment/Stairs" index="9" instance=ExtResource( 8 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.7, 0.3, -23.3 )
+
+[node name="CubeSmall3" parent="Environment/Stairs" index="10" instance=ExtResource( 8 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.7, 0.6, -24.3 )
+
+[node name="CubeSmall6" parent="Environment/Stairs" index="11" instance=ExtResource( 8 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 18.7, 0.6, -24.3 )
+
+[node name="CubeSmall11" parent="Environment/Stairs" index="12" instance=ExtResource( 8 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.7, 0.6, -24.3 )
+
+[node name="CubeSmall14" parent="Environment/Stairs" index="13" instance=ExtResource( 8 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.7, 0.6, -24.3 )
+
+[node name="CubeSmall19" parent="Environment/Stairs" index="14" instance=ExtResource( 8 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.7, 0.6, -24.3 )
+
+[node name="CubeSmall4" parent="Environment/Stairs" index="15" instance=ExtResource( 8 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.7, 0.9, -25.3 )
+
+[node name="CubeSmall8" parent="Environment/Stairs" index="16" instance=ExtResource( 8 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 18.7, 0.9, -25.3 )
+
+[node name="CubeSmall9" parent="Environment/Stairs" index="17" instance=ExtResource( 8 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.7, 0.9, -25.3 )
+
+[node name="CubeSmall15" parent="Environment/Stairs" index="18" instance=ExtResource( 8 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.7, 0.9, -25.3 )
+
+[node name="CubeSmall20" parent="Environment/Stairs" index="19" instance=ExtResource( 8 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.7, 0.9, -25.3 )
+
+[node name="Stairs2" type="Spatial" parent="Environment" index="11"]
 
 editor/display_folded = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, -4 )
 
-[node name="FloorBig" parent="Main Area" index="0" instance=ExtResource( 5 )]
+[node name="CubeSmall" parent="Environment/Stairs2" index="0" instance=ExtResource( 8 )]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.7, 2.23517e-008, -22.3 )
 
-[node name="WallSmall" parent="Main Area" index="1" instance=ExtResource( 6 )]
+[node name="CubeSmall5" parent="Environment/Stairs2" index="1" instance=ExtResource( 8 )]
 
-transform = Transform( -2.98023e-008, 0, 1, 0, 1, 0, -1.44434, 0, -4.30446e-008, -10.2, 2.6, -6.3 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 18.7, 2.23517e-008, -22.3 )
 
-[node name="WallSmall2" parent="Main Area" index="2" instance=ExtResource( 6 )]
+[node name="CubeSmall10" parent="Environment/Stairs2" index="2" instance=ExtResource( 8 )]
 
-transform = Transform( -2.98023e-008, 0, 1, 0, 1, 0, -1.44434, 0, -4.30446e-008, -10.2, 2.6, 6.3 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.7, 2.23517e-008, -22.3 )
 
-[node name="WallSmall3" parent="Main Area" index="3" instance=ExtResource( 6 )]
+[node name="CubeSmall13" parent="Environment/Stairs2" index="3" instance=ExtResource( 8 )]
 
-transform = Transform( -4.02611, 0, -2.41834e-007, 0, 1, 0, 9.29364e-008, 0, -1, -0.2, 2.6, 9.9 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.7, 2.23517e-008, -22.3 )
 
-[node name="WallSmall4" parent="Main Area" index="4" instance=ExtResource( 6 )]
+[node name="CubeSmall18" parent="Environment/Stairs2" index="4" instance=ExtResource( 8 )]
 
-transform = Transform( -4.02611, 0, -2.41834e-007, 0, 1, 0, 9.29364e-008, 0, -1, -0.2, 2.6, -9.9 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.7, 2.23517e-008, -22.3 )
 
-[node name="WallSmall5" parent="Main Area" index="5" instance=ExtResource( 6 )]
+[node name="CubeSmall2" parent="Environment/Stairs2" index="5" instance=ExtResource( 8 )]
 
-transform = Transform( 8.30506e-008, 0, 1, 0, 1, 0, -3.98585, 0, -1.96141e-007, 9.8, 2.6, -7.59959e-007 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.7, 0.3, -23.3 )
 
-[node name="CubeSmall" parent="Main Area" index="6" instance=ExtResource( 7 )]
+[node name="CubeSmall7" parent="Environment/Stairs2" index="6" instance=ExtResource( 8 )]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0.8, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 18.7, 0.3, -23.3 )
 
-[node name="CubeSmall2" parent="Main Area" index="7" instance=ExtResource( 7 )]
+[node name="CubeSmall12" parent="Environment/Stairs2" index="7" instance=ExtResource( 8 )]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6, 0.8, -4.3 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.7, 0.3, -23.3 )
 
-[node name="CubeSmall3" parent="Main Area" index="8" instance=ExtResource( 7 )]
+[node name="CubeSmall16" parent="Environment/Stairs2" index="8" instance=ExtResource( 8 )]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9, 0.8, -7.2 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.7, 0.3, -23.3 )
 
-[node name="CubeSmall4" parent="Main Area" index="9" instance=ExtResource( 7 )]
+[node name="CubeSmall17" parent="Environment/Stairs2" index="9" instance=ExtResource( 8 )]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4, 0.8, 7 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.7, 0.3, -23.3 )
 
-[node name="CubeMedium" parent="Main Area" index="10" instance=ExtResource( 8 )]
+[node name="CubeSmall3" parent="Environment/Stairs2" index="10" instance=ExtResource( 8 )]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.7, 2.3, 5 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.7, 0.6, -24.3 )
 
-[node name="CubeMedium2" parent="Main Area" index="11" instance=ExtResource( 8 )]
+[node name="CubeSmall6" parent="Environment/Stairs2" index="11" instance=ExtResource( 8 )]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.6, -1, 3.3 )
-_sections_unfolded = [ "Visibility" ]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 18.7, 0.6, -24.3 )
 
-[node name="RampLow" parent="Main Area" index="12" instance=ExtResource( 9 )]
+[node name="CubeSmall11" parent="Environment/Stairs2" index="12" instance=ExtResource( 8 )]
 
-transform = Transform( -4.37114e-008, 0, -1, 0, 1, 0, 1, 0, -4.37114e-008, 0, 0.4, -7.3 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.7, 0.6, -24.3 )
 
-[node name="RampHigh" parent="Main Area" index="13" instance=ExtResource( 10 )]
+[node name="CubeSmall14" parent="Environment/Stairs2" index="13" instance=ExtResource( 8 )]
 
-transform = Transform( -0.0871558, 0, 0.448288, 0, 1, 0, -0.996195, 0, -0.0392201, 3.5, 1.7, -0.2 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.7, 0.6, -24.3 )
 
-[node name="RampMedium" parent="Main Area" index="14" instance=ExtResource( 11 )]
+[node name="CubeSmall19" parent="Environment/Stairs2" index="14" instance=ExtResource( 8 )]
 
-transform = Transform( 0.438371, 0, 0.674096, 0, 1, 0, -0.898794, 0, 0.328778, -0.4, -0.5, -3.8 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.7, 0.6, -24.3 )
 
-[node name="RampMedium2" parent="Main Area" index="15" instance=ExtResource( 11 )]
+[node name="CubeSmall4" parent="Environment/Stairs2" index="15" instance=ExtResource( 8 )]
 
-transform = Transform( -0.430511, 0, -0.676939, 0, 1, 0, 0.902585, 0, -0.322883, -3.4, -0.5, 0.3 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.7, 0.9, -25.3 )
 
-[node name="Player" parent="." index="3" instance=ExtResource( 12 )]
+[node name="CubeSmall8" parent="Environment/Stairs2" index="16" instance=ExtResource( 8 )]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, 0.3 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 18.7, 0.9, -25.3 )
 
-[node name="UMP45" parent="." index="4" instance=ExtResource( 13 )]
+[node name="CubeSmall9" parent="Environment/Stairs2" index="17" instance=ExtResource( 8 )]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6, 1.6, -4.2 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.7, 0.9, -25.3 )
+
+[node name="CubeSmall15" parent="Environment/Stairs2" index="18" instance=ExtResource( 8 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.7, 0.9, -25.3 )
+
+[node name="CubeSmall20" parent="Environment/Stairs2" index="19" instance=ExtResource( 8 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.7, 0.9, -25.3 )
+
+[node name="Player" parent="." index="1" instance=ExtResource( 9 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0 )
+_sections_unfolded = [ "Transform" ]
+gravity_fall_coef = 0
+max_slope_angle = 45
+stair_jump_height = 10
 
 
