@@ -12,7 +12,7 @@
 [ext_resource path="res://Models/Weapons/AR1.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=11]
 
-[node name="Testing Ground" type="Node" index="0"]
+[node name="Testing Ground" type="Node"]
 
 script = ExtResource( 1 )
 

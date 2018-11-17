@@ -10,6 +10,11 @@ enum {
 
 var weapons
 
+signal weapon_fired(sender)
+signal weapon_fire_mode_changed(sender)
+signal weapon_changed(sender)
+signal weapon_reloaded(sender)
+
 func _ready():
 	weapons = {
 		0: $SmgPosition,
@@ -56,12 +61,14 @@ func _on_ActionRaycast_weapon_equipped(id):
 		new_weapon.show()
 	
 	current_weapon_id = id
+	emit_signal("weapon_changed", self)
 
 func fire_weapon(delta):
 	var current_weapon = weapons[current_weapon_id].get_child(0)
 	
 	if current_weapon != null:
 		current_weapon.fire(delta)
+		emit_signal("weapon_fired", self)
 
 func stop_firing_weapon():
 	var current_weapon = weapons[current_weapon_id].get_child(0)
@@ -74,3 +81,7 @@ func reload_weapon():
 	
 	if current_weapon != null:
 		current_weapon.reload()
+		emit_signal("weapon_reloaded", self)
+
+func get_equipped_weapon():
+	return weapons[current_weapon_id].get_child(0)
