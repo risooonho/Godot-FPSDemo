@@ -1,14 +1,25 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Models/Weapons/AR 1.dae" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Weapon.gd" type="Script" id=2]
 [ext_resource path="res://Audio/Weapons/rifle.wav" type="AudioStream" id=3]
 
-[node name="AR1" instance=ExtResource( 1 )]
+[sub_resource type="BoxShape" id=1]
 
+extents = Vector3( 1.31874, 0.263555, 0.166983 )
+
+[node name="AR1" index="0" instance=ExtResource( 1 )]
+
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 0, 0, 0 )
 script = ExtResource( 2 )
 _sections_unfolded = [ "Transform" ]
-fire_rate = 1
+weapon_id = 1
+fire_rate_full = 2.0
+fire_rate_triple = 1.0
+fire_rate_single = 1
+fire_range = 0
+fire_mode = 2
+chamber_capacity = 10
 
 [node name="AR_1" parent="." index="0"]
 
@@ -56,5 +67,33 @@ pitch_scale = 1.0
 autoplay = false
 mix_target = 0
 bus = "Master"
+
+[node name="WeaponArea" type="Area" parent="." index="3"]
+
+input_ray_pickable = false
+input_capture_on_drag = false
+space_override = 0
+gravity_point = false
+gravity_distance_scale = 0.0
+gravity_vec = Vector3( 0, -1, 0 )
+gravity = 9.8
+linear_damp = 0.1
+angular_damp = 1.0
+priority = 0.0
+monitoring = true
+monitorable = true
+collision_layer = 2
+collision_mask = 2
+audio_bus_override = false
+audio_bus_name = "Master"
+reverb_bus_enable = false
+reverb_bus_name = "Master"
+reverb_bus_amount = 0.0
+reverb_bus_uniformity = 0.0
+
+[node name="CollisionShape" type="CollisionShape" parent="WeaponArea" index="0"]
+
+shape = SubResource( 1 )
+disabled = false
 
 

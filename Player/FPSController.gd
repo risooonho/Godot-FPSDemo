@@ -38,6 +38,7 @@ export (bool) var is_flying = false
 # Gravity variables
 export (float) var gravity = -9.8
 # Has to be negative as it is added to the gravity
+export (int) var default_gravity_fall_coef = -0
 export (int) var gravity_fall_coef = -0
 
 # Walking variables.
@@ -57,7 +58,7 @@ export (int) var max_slope_angle = 85
 
 # Stairs variables. Used to manage behavior when walking on stairs.
 export (int) var max_stair_angle = 20
-export (int) var stair_jump_height = 6
+export (int) var stair_jump_height = 2
 
 # Jumping variables.
 export (int) var jump_height = 7
@@ -98,7 +99,7 @@ func move(delta):
 	
 	if player_stance != PLAYER_STANCES.FLYING:
 		process_slopes_detection(delta)
-		#process_stair_detection()
+		process_stair_detection()
 		process_walk_movements(delta)
 	else:
 		process_fly_movement(delta)
@@ -182,8 +183,11 @@ func process_stair_detection():
 		var stair_angle = rad2deg(acos(stair_normal.dot(Vector3(0,1,0))))
 		
 		if stair_angle < max_stair_angle:
+			gravity_fall_coef = -5
 			velocity.y = stair_jump_height
 			has_contact_with_floor = false
+		else:
+			gravity_fall_coef = default_gravity_fall_coef
 
 func process_walk_movements(delta):
 	# First we need to calculate the speed to apply

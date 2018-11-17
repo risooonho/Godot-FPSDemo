@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Player/FPSController.gd" type="Script" id=1]
 [ext_resource path="res://Player/Head.gd" type="Script" id=2]
-[ext_resource path="res://Models/Weapons/EmptyHand.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Textures/Crosshairs/simple-01-whole.png" type="Texture" id=4]
+[ext_resource path="res://Player/ActionRaycast.gd" type="Script" id=3]
+[ext_resource path="res://Player/WeaponHolster.gd" type="Script" id=4]
+[ext_resource path="res://Textures/Crosshairs/simple-01-whole.png" type="Texture" id=5]
 
 [sub_resource type="CapsuleShape" id=1]
 
@@ -21,11 +22,10 @@ _sections_unfolded = [ "Resource" ]
 
 [node name="Player" type="KinematicBody"]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0.3 )
 input_ray_pickable = true
 input_capture_on_drag = false
-collision_layer = 1
-collision_mask = 1
+collision_layer = 3
+collision_mask = 3
 axis_lock_linear_x = false
 axis_lock_linear_y = false
 axis_lock_linear_z = false
@@ -34,6 +34,7 @@ axis_lock_angular_y = false
 axis_lock_angular_z = false
 collision/safe_margin = 0.001
 script = ExtResource( 1 )
+_sections_unfolded = [ "Collision", "Transform" ]
 mouse_sensitivity = 0.3
 max_camera_angle = 90
 min_camera_angle = -90
@@ -41,6 +42,7 @@ fly_speed = 20
 fly_accel = 4
 is_flying = false
 gravity = -9.8
+default_gravity_fall_coef = 0
 gravity_fall_coef = 0
 walk_speed = 20
 sprint_speed_coef = 5
@@ -51,7 +53,7 @@ deacceleration = 6
 player_stance = 0
 max_slope_angle = 85
 max_stair_angle = 20
-stair_jump_height = 6
+stair_jump_height = 2
 jump_height = 7
 max_time_in_air = 30
 
@@ -87,7 +89,7 @@ crawl_position = Vector3( 0, -0.5, 0 )
 
 [node name="Camera" type="Camera" parent="Head" index="0"]
 
-transform = Transform( 1.52, 0, 0, 0, 1.04, 0, 0, 0, 0.8, 0, 0, -0.4 )
+transform = Transform( 1.52, 0, 0, 0, 1.04, 0, 0, 0, 0.8, 0, -0.0999999, 0 )
 keep_aspect = 1
 cull_mask = 524287
 environment = null
@@ -102,21 +104,35 @@ near = 0.05
 far = 500.0
 _sections_unfolded = [ "Transform", "Visibility" ]
 
-[node name="WeaponPosition" type="Position3D" parent="Head/Camera" index="0"]
-
-transform = Transform( -4.37114e-008, 0, 0.526316, 0, 0.999999, 0, -1.9, 0, -4.37115e-008, 0.328947, -0.48077, -1 )
-
-[node name="EmptyHand" parent="Head/Camera/WeaponPosition" index="0" instance=ExtResource( 3 )]
-
-visible = false
-
-[node name="ActionRaycast" type="RayCast" parent="Head/Camera" index="1"]
+[node name="ActionRaycast" type="RayCast" parent="Head/Camera" index="0"]
 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.25 )
 enabled = true
 exclude_parent = true
 cast_to = Vector3( 0, 0, -2 )
-collision_mask = 262147
+collision_mask = 2
+script = ExtResource( 3 )
+
+[node name="WeaponHolster" type="Spatial" parent="Head/Camera" index="1"]
+
+script = ExtResource( 4 )
+
+[node name="WeaponRaycast" type="RayCast" parent="Head/Camera/WeaponHolster" index="0"]
+
+enabled = false
+exclude_parent = true
+cast_to = Vector3( 0, -1, 0 )
+collision_mask = 1
+
+[node name="RiflePosition" type="Position3D" parent="Head/Camera/WeaponHolster" index="1"]
+
+transform = Transform( -4.37114e-008, 0, -1, 0, 0.999999, 0, 1, 0, -4.37114e-008, 0.526316, -0.288459, -1.375 )
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="SmgPosition" type="Position3D" parent="Head/Camera/WeaponHolster" index="2"]
+
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 0.460526, -0.576925, -0.875 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="SlopeRaycast" type="RayCast" parent="." index="2"]
 
@@ -129,7 +145,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="StairRaycast" type="RayCast" parent="." index="3"]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.7, 0.6 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -0.8 )
 enabled = true
 exclude_parent = true
 cast_to = Vector3( 0, -1, 0 )
@@ -153,7 +169,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 stretch_mode = 0
 _sections_unfolded = [ "Rect" ]
 
@@ -164,5 +180,7 @@ _sections_unfolded = [ "Rect" ]
 [connection signal="start_standing" from="." to="Head" method="_on_Player_start_standing"]
 
 [connection signal="start_walking" from="." to="Head" method="_on_Player_start_walking"]
+
+[connection signal="weapon_equipped" from="Head/Camera/ActionRaycast" to="Head/Camera/WeaponHolster" method="_on_ActionRaycast_weapon_equipped"]
 
 
