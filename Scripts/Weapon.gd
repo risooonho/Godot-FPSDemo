@@ -24,19 +24,18 @@ var has_fire = false
 var fire_count = 0
 
 func fire(delta):
+	var fired = false
+	
 	if current_chamber_capacity == 0:
 		return
 	
 	if can_fire && !has_fire:
-		$FireSound.play()
-		current_chamber_capacity -= 1
+		fired = true
 		has_fire = true
 		last_fire_time = 0
 	elif can_fire && fire_mode == TRIPLE:
 		if (last_fire_time >= fire_rate_triple):
-			$FireSound.play()
-			current_chamber_capacity -= 1
-			last_fire_time = 0
+			fired = true
 			fire_count += 1
 			
 			if fire_count == 3:
@@ -45,11 +44,15 @@ func fire(delta):
 			last_fire_time += delta * 10
 	elif can_fire && fire_mode == FULL:
 		if (last_fire_time >= fire_rate_full):
-			$FireSound.play()
-			current_chamber_capacity -= 1
-			last_fire_time = 0
+			fired = true
 		else:
 			last_fire_time += delta * 10
+			
+	if fired:
+		$FireSound.play()
+		$WeaponAnimation.play("Fire")
+		current_chamber_capacity -= 1
+		last_fire_time = 0
 
 func stop_fire():
 	can_fire = true
